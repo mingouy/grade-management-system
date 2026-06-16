@@ -72,8 +72,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 学生角色权限
         if ("student".equals(role)) {
-            // 学生可访问: /student/*, /dashboard, /auth
-            if (uri.contains("/student") || uri.contains("/dashboard") || uri.contains("/auth")) {
+            // 学生可访问: /student/*, /dashboard, /auth, /course-selections
+            if (uri.contains("/student") || uri.contains("/dashboard") || uri.contains("/auth")
+                    || uri.contains("/course-selections")) {
                 return true;
             }
             throw new BusinessException(403, "无权限访问");

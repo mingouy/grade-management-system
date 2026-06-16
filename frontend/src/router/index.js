@@ -74,6 +74,12 @@ const routes = [
         meta: { title: '成绩查询', roles: ['teacher'] }
       },
       {
+        path: 'teacher/publish-course',
+        name: 'PublishCourse',
+        component: () => import('@/views/teacher/PublishCourse.vue'),
+        meta: { title: '发布课程', roles: ['teacher'] }
+      },
+      {
         path: 'student/info',
         name: 'MyInfo',
         component: () => import('@/views/student/MyInfo.vue'),
@@ -84,6 +90,12 @@ const routes = [
         name: 'MyCourse',
         component: () => import('@/views/student/MyCourse.vue'),
         meta: { title: '我的课程', roles: ['student'] }
+      },
+      {
+        path: 'student/select-course',
+        name: 'SelectCourse',
+        component: () => import('@/views/student/SelectCourse.vue'),
+        meta: { title: '在线选课', roles: ['student'] }
       },
       {
         path: 'student/scores',

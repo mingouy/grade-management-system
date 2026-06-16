@@ -140,12 +140,14 @@ const adminMenus = [
 
 const teacherMenus = [
   { path: '/teacher/classes', label: '我的班级', icon: 'UserFilled' },
+  { path: '/teacher/publish-course', label: '发布课程', icon: 'Plus' },
   { path: '/teacher/score-input', label: '成绩录入', icon: 'Edit' },
   { path: '/teacher/score-query', label: '成绩查询', icon: 'DataAnalysis' }
 ]
 
 const studentMenus = [
   { path: '/student/info', label: '个人信息', icon: 'User' },
+  { path: '/student/select-course', label: '在线选课', icon: 'Grid' },
   { path: '/student/courses', label: '我的课程', icon: 'Reading' },
   { path: '/student/scores', label: '我的成绩', icon: 'Trophy' }
 ]
