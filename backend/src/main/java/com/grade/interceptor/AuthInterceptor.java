@@ -62,9 +62,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 教师角色权限
         if ("teacher".equals(role)) {
-            // 教师可访问: /teacher/*, /dashboard, /classes, /courses, /scores, /auth
+            // 教师可访问: /teacher/*, /dashboard, /classes, /courses, /scores, /auth, /profile, /notifications, /export
             if (uri.contains("/teacher") || uri.contains("/dashboard") || uri.contains("/classes")
-                    || uri.contains("/courses") || uri.contains("/scores") || uri.contains("/auth")) {
+                    || uri.contains("/courses") || uri.contains("/scores") || uri.contains("/auth")
+                    || uri.contains("/profile") || uri.contains("/notifications") || uri.contains("/export")
+                    || uri.contains("/grade-analysis") || uri.contains("/import")) {
                 return true;
             }
             throw new BusinessException(403, "无权限访问");
@@ -72,9 +74,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 学生角色权限
         if ("student".equals(role)) {
-            // 学生可访问: /student/*, /dashboard, /auth, /course-selections
+            // 学生可访问: /student/*, /dashboard, /auth, /course-selections, /profile, /notifications, /export
             if (uri.contains("/student") || uri.contains("/dashboard") || uri.contains("/auth")
-                    || uri.contains("/course-selections")) {
+                    || uri.contains("/course-selections") || uri.contains("/profile") || uri.contains("/notifications")
+                    || uri.contains("/export") || uri.contains("/grade-analysis")) {
                 return true;
             }
             throw new BusinessException(403, "无权限访问");

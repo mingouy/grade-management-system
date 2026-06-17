@@ -79,6 +79,7 @@
           </div>
         </div>
         <div class="topbar-right">
+          <NotificationBell />
           <el-dropdown @command="handleCommand" trigger="click">
             <div class="user-pill">
               <div class="avatar">{{ (userStore.userInfo.realName || userStore.userInfo.username || 'U')[0] }}</div>
@@ -120,6 +121,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import NotificationBell from '@/components/NotificationBell.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -135,21 +137,24 @@ const adminMenus = [
   { path: '/admin/students', label: '学生管理', icon: 'UserFilled' },
   { path: '/admin/departments', label: '专业管理', icon: 'OfficeBuilding' },
   { path: '/admin/classes', label: '班级管理', icon: 'Collection' },
-  { path: '/admin/courses', label: '课程管理', icon: 'Reading' }
+  { path: '/admin/courses', label: '课程管理', icon: 'Reading' },
+  { path: '/analysis', label: '成绩分析', icon: 'DataAnalysis' }
 ]
 
 const teacherMenus = [
   { path: '/teacher/classes', label: '我的班级', icon: 'UserFilled' },
   { path: '/teacher/publish-course', label: '发布课程', icon: 'Plus' },
   { path: '/teacher/score-input', label: '成绩录入', icon: 'Edit' },
-  { path: '/teacher/score-query', label: '成绩查询', icon: 'DataAnalysis' }
+  { path: '/teacher/score-query', label: '成绩查询', icon: 'DataAnalysis' },
+  { path: '/analysis', label: '成绩分析', icon: 'DataAnalysis' }
 ]
 
 const studentMenus = [
   { path: '/student/info', label: '个人信息', icon: 'User' },
   { path: '/student/select-course', label: '在线选课', icon: 'Grid' },
   { path: '/student/courses', label: '我的课程', icon: 'Reading' },
-  { path: '/student/scores', label: '我的成绩', icon: 'Trophy' }
+  { path: '/student/scores', label: '我的成绩', icon: 'Trophy' },
+  { path: '/student/score-trend', label: '成绩趋势', icon: 'TrendCharts' }
 ]
 
 const pageTitle = computed(() => {

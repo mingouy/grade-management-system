@@ -18,6 +18,7 @@
     <div class="page-card">
       <div class="card-header">
         <span class="card-title">成绩明细</span>
+        <el-button type="success" size="small" @click="handleExport"><el-icon><Download /></el-icon>导出Excel</el-button>
       </div>
 
       <el-table :data="scoreList" v-loading="loading" stripe>
@@ -48,6 +49,9 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { getStudentScores } from '@/api/student'
+import { exportMyScores } from '@/api/export'
+import { ElMessage } from 'element-plus'
+import { Download } from '@element-plus/icons-vue'
 
 const loading = ref(false)
 const scoreList = ref([])
@@ -107,6 +111,20 @@ const fetchData = async () => {
   loading.value = true
   try { const res = await getStudentScores(); scoreList.value = res.data || [] }
   catch (e) { console.error(e) } finally { loading.value = false }
+}
+
+const handleExport = async () => {
+  try {
+    const res = await exportMyScores()
+    const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = '我的成绩.xlsx'
+    link.click()
+    window.URL.revokeObjectURL(url)
+    ElMessage.success('导出成功')
+  } catch (e) { console.error(e) }
 }
 
 onMounted(() => fetchData())

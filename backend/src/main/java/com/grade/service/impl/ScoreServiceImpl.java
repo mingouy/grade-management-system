@@ -69,4 +69,9 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, Score> implements
         }
         return true;
     }
+
+    @Override
+    public List<Score> listAllWithDetails() {
+        return baseMapper.selectListWithDetails();
+    }
 }

@@ -102,6 +102,30 @@ const routes = [
         name: 'MyScore',
         component: () => import('@/views/student/MyScore.vue'),
         meta: { title: '我的成绩', roles: ['student'] }
+      },
+      {
+        path: 'student/score-trend',
+        name: 'ScoreTrend',
+        component: () => import('@/views/student/ScoreTrend.vue'),
+        meta: { title: '成绩趋势', roles: ['student'] }
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('@/views/profile/ProfilePage.vue'),
+        meta: { title: '个人信息' }
+      },
+      {
+        path: 'notifications',
+        name: 'Notifications',
+        component: () => import('@/views/notification/NotificationList.vue'),
+        meta: { title: '通知中心' }
+      },
+      {
+        path: 'analysis',
+        name: 'GradeAnalysis',
+        component: () => import('@/views/analysis/GradeAnalysis.vue'),
+        meta: { title: '成绩分析', roles: ['admin', 'teacher'] }
       }
     ]
   }

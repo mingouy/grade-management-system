@@ -20,3 +20,10 @@ export function getStudentScores() {
     method: 'get'
   })
 }
+
+export function getStudentScoreTrend() {
+  return request({
+    url: '/student/score-trend',
+    method: 'get'
+  })
+}

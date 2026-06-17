@@ -42,4 +42,11 @@ public interface ScoreService extends IService<Score> {
      * @return 是否成功
      */
     boolean saveBatchScores(List<Score> scores);
+
+    /**
+     * 查询所有成绩（含学生和课程信息）
+     *
+     * @return 成绩列表
+     */
+    List<Score> listAllWithDetails();
 }

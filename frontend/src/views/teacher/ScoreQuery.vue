@@ -30,6 +30,7 @@
         <div class="filter-actions">
           <el-button type="primary" @click="handleSearch"><el-icon><Search /></el-icon>查询</el-button>
           <el-button @click="handleReset">重置</el-button>
+          <el-button type="success" @click="handleExport"><el-icon><Download /></el-icon>导出Excel</el-button>
         </div>
       </div>
     </div>
@@ -103,6 +104,9 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { getCourseList } from '@/api/course'
 import { getScoreList } from '@/api/score'
+import { exportScores } from '@/api/export'
+import { ElMessage } from 'element-plus'
+import { Download } from '@element-plus/icons-vue'
 
 const loading = ref(false)
 const courseList = ref([])
@@ -142,6 +146,20 @@ const handleSearch = async () => {
 }
 
 const handleReset = () => { searchForm.courseId = null; searchForm.semester = ''; handleSearch() }
+
+const handleExport = async () => {
+  try {
+    const res = await exportScores({ courseId: searchForm.courseId, semester: searchForm.semester })
+    const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = '成绩报表.xlsx'
+    link.click()
+    window.URL.revokeObjectURL(url)
+    ElMessage.success('导出成功')
+  } catch (e) { console.error(e) }
+}
 
 onMounted(() => { fetchCourses(); handleSearch() })
 </script>

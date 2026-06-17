@@ -10,6 +10,16 @@
     <div class="page-card">
       <div class="card-header">
         <span class="card-title">选择课程</span>
+        <div class="header-actions">
+          <el-upload
+            :show-file-list="false"
+            accept=".xlsx,.xls"
+            :before-upload="handleImport"
+          >
+            <el-button type="warning" size="small"><el-icon><Upload /></el-icon>导入成绩</el-button>
+          </el-upload>
+          <el-button type="info" size="small" @click="handleDownloadTemplate">下载模板</el-button>
+        </div>
       </div>
       <div class="filter-bar">
         <el-select v-model="selectedCourseId" placeholder="请选择要录入成绩的课程" clearable style="width: 320px" @change="handleCourseChange">
@@ -68,7 +78,9 @@ import { ref, onMounted } from 'vue'
 import request from '@/utils/request'
 import { getScoresByCourse } from '@/api/score'
 import { createScore } from '@/api/score'
+import { importScores, downloadTemplate } from '@/api/import'
 import { ElMessage } from 'element-plus'
+import { Upload } from '@element-plus/icons-vue'
 
 const loading = ref(false)
 const submitLoading = ref(false)
@@ -118,6 +130,30 @@ const handleSubmit = async () => {
   submitLoading.value = true
   try { await createScore(scores); ElMessage.success('成绩保存成功') }
   catch (e) { console.error(e) } finally { submitLoading.value = false }
+}
+
+const handleImport = async (file) => {
+  try {
+    const res = await importScores(file)
+    ElMessage.success(res.message || '导入成功')
+    if (selectedCourseId.value) {
+      handleCourseChange(selectedCourseId.value)
+    }
+  } catch (e) { console.error(e) }
+  return false
+}
+
+const handleDownloadTemplate = async () => {
+  try {
+    const res = await downloadTemplate()
+    const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'score_template.xlsx'
+    link.click()
+    window.URL.revokeObjectURL(url)
+  } catch (e) { console.error(e) }
 }
 
 onMounted(() => fetchCourses())
